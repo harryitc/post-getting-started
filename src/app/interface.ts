@@ -3,8 +3,3 @@ export interface POST {
     title: string;
     body: string;
 }
-
-export interface addPost {
-    title: string;
-    body: string;
-}

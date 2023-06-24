@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../shared/post.service';
 import { POST } from 'src/app/interface';
+import { PostModel } from '../shared/post.model';
 
 @Component({
     selector: 'post-list',
@@ -12,9 +13,15 @@ export class ListComponent implements OnInit {
         private service: PostService,
     ) { }
     post: POST[] = [];
+    loaded?: boolean;
     ngOnInit(): void {
         this.init();
-        this.service.displayAll().subscribe(res => this.post = res);
+        this.service.displayAll().subscribe(res => {
+            this.post = [];
+            // map data
+            res.map(item => this.post.push(new PostModel(item).getResposne()));
+        });
+        this.service.getLoaded().subscribe(res => this.loaded = res);
     }
 
     init() {

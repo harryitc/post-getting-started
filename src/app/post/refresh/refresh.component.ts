@@ -9,7 +9,9 @@ export class RefreshComponent {
     constructor(
         private service: PostService,
     ) { }
-    refresh() {
-        this.service.fetchData();
+    async refresh() {
+        this.service.setLoaded(false);
+        await this.service.fetchData();
+        this.service.setLoaded(true);
     }
 }

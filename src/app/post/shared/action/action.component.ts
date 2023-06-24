@@ -19,6 +19,7 @@ export class ActionComponent {
     }
     delete() {
         this.setId();
+        this.service.deletePost(this.id).catch(() => { this.service.notifyError() });
         // this.route.navigate(['post/dele']);
     }
     detail() {

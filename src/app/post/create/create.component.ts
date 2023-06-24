@@ -13,10 +13,9 @@ export class CreateComponent {
     ) { }
     title = '';
     body = '';
-    submit() {
-        this.service.addPost({ id: "", title: this.title, body: this.body }).catch(err => {
-            this.service.notifyError();
-        })
+    async submit() {
+        await this.service.addPost({ id: "", title: this.title, body: this.body }).catch(() => { this.service.notifyError() });
+        this.back();
     }
     back() {
         this.route.navigate(['post']);

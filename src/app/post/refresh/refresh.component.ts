@@ -10,8 +10,6 @@ export class RefreshComponent {
         private service: PostService,
     ) { }
     refresh() {
-        this.service.fetchData().catch(err => {
-            this.service.notifyError();
-        })
+        this.service.fetchData();
     }
 }

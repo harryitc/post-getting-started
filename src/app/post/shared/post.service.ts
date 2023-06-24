@@ -12,8 +12,6 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  basePath: string = "../../../";
-
   private readonly url: string = `${UrlVariable.urlPost}`
   private readonly apiCreate = "posts"; //// chưa biết cách tạo api create ở server fake
   private readonly apiDelete = "posts";
@@ -29,14 +27,16 @@ export class PostService {
       .toPromise()
       .then(res => {
         const mapBody = {
-          id: body.id + 1,
+          id: this.posts[this.posts.length - 1].id + 1,
           title: body.title,
           body: body.body,
         }
         this.posts.push(mapBody);
         this.updateOnChangeData(this.posts);
       })
-      .catch(err => err);
+      .catch(err => {
+        return err;
+      });
   }
 
   deletePost(id: string) {
@@ -45,32 +45,36 @@ export class PostService {
         id: id
       }
     }
-    return this.http.delete(`${this.url}/${this.apiDelete}`, body)
+    return this.http.delete(`${this.url}/${this.apiDelete}/${id}`, body)
       .toPromise()
       .then(res => {
         let index = this.posts.findIndex(item => item.id == id);
         if (index != -1) this.posts.splice(index, 1);
         this.updateOnChangeData(this.posts);
       })
-      .catch(err => err);
+      .catch(err => {
+        return err;
+      });
   }
 
   updatePost(body: POST) {
-    return this.http.put<POST>(`${this.url}/${this.apiUpdate}`, body)
+    return this.http.put<POST>(`${this.url}/${this.apiUpdate}/${body.id}`, body)
       .toPromise()
       .then(res => {
-        let index = this.posts.findIndex(item => item.id == body.id);
+        const index = this.posts.findIndex(item => item.id == body.id);
         if (index != -1) {
           this.posts[index].title = body.title;
           this.posts[index].body = body.body;
         }
         this.updateOnChangeData(this.posts);
       })
-      .catch(err => err);
+      .catch(err => {
+        return err;
+      });
   }
 
   getOnePost(id: string) {
-    let index = this.posts.findIndex(item => item.id == id);
+    const index = this.posts.findIndex(item => item.id == id);
     if (index == -1) return null;
     return this.posts[index];
   }
@@ -86,7 +90,9 @@ export class PostService {
         this.posts = res;
         this.updateOnChangeData(this.posts);
       })
-      .catch(err => err);
+      .catch(err => {
+        return err;
+      });
   }
 
   setIdToGetOne(id: string) {
@@ -102,11 +108,11 @@ export class PostService {
   }
 
   notifyError() {
-    window.alert('thanh cong');
+    window.alert('Oops! Error Network.');
   }
 
   notifySuccess() {
-    window.alert('loi');
+    window.alert('Done');
   }
 
   // getShippingPrices() {

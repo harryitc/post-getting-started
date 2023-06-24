@@ -32,10 +32,9 @@ export class UpdateComponent implements OnInit {
 
 
 
-    submit() {
-        this.service.updatePost(this.post).catch(err => {
-            this.service.notifyError();
-        })
+    async submit() {
+        await this.service.updatePost(this.post).catch(() => { this.service.notifyError() });
+        this.back();
     }
 
     back() {

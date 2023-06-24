@@ -4,43 +4,48 @@ import { HttpClient } from '@angular/common/http';
 import { POST } from '../../interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UrlVariable } from 'src/app/utils/variable';
-
+// import * as fs from "fs";
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
   constructor(private http: HttpClient) { }
+
+  basePath: string = "../../../";
+
   private readonly url: string = `${UrlVariable.urlPost}`
-  // private readonly apiCreate = "posts/"; //// chưa biết cách tạo api create ở server fake
+  private readonly apiCreate = "posts"; //// chưa biết cách tạo api create ở server fake
   private readonly apiDelete = "posts";
   private readonly apiGet = "posts";
-  private readonly apiUpdate = "";
+  private readonly apiUpdate = "posts";
 
   private posts: POST[] = [];
   private postsSubject: BehaviorSubject<POST[]> = new BehaviorSubject<POST[]>([]);
   private shareIdSubject: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
   async addPost(body: POST) {
-    // return this.http.post<POST>(`${this.url}/${this.apiCreate}`, body)
-    //   .toPromise()
-    //   .then(res => {
-    //     const mapBody = {
-    //       id: body.id + 1,
-    //       title: body.title,
-    //       body: body.body,
-    //     }
-    //     this.posts.push(mapBody);
-    //     this.updateOnChangeData(this.posts);
-    //   })
-    //   .catch(err => err);
+    return this.http.post<POST>(`${this.url}/${this.apiCreate}`, body)
+      .toPromise()
+      .then(res => {
+        const mapBody = {
+          id: body.id + 1,
+          title: body.title,
+          body: body.body,
+        }
+        this.posts.push(mapBody);
+        this.updateOnChangeData(this.posts);
+      })
+      .catch(err => err);
   }
 
   deletePost(id: string) {
     const body = {
-      id: id
+      params: {
+        id: id
+      }
     }
-    return this.http.post<any>(`${this.url}/${this.apiDelete}`, body)
+    return this.http.delete(`${this.url}/${this.apiDelete}`, body)
       .toPromise()
       .then(res => {
         let index = this.posts.findIndex(item => item.id == id);
@@ -51,7 +56,7 @@ export class PostService {
   }
 
   updatePost(body: POST) {
-    return this.http.post<POST>(`${this.url}/${this.apiUpdate}`, body)
+    return this.http.put<POST>(`${this.url}/${this.apiUpdate}`, body)
       .toPromise()
       .then(res => {
         let index = this.posts.findIndex(item => item.id == body.id);

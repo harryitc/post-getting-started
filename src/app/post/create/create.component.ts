@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'post-create',
     templateUrl: './create.component.html',
-    //   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent {
     constructor(

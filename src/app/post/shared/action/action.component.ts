@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { PostService } from '../post.service';
 
 @Component({
     selector: 'post-action',
@@ -9,14 +10,22 @@ import { Router } from '@angular/router';
 export class ActionComponent {
     constructor(
         private route: Router,
+        private service: PostService,
     ) { }
+    @Input() id = '';
     update() {
-        this.route.navigate(['post/create']);
+        this.setId();
+        this.route.navigate(['post/update']);
     }
     delete() {
-        this.route.navigate(['post/create']);
+        this.setId();
+        // this.route.navigate(['post/dele']);
     }
     detail() {
-        this.route.navigate(['post/create']);
+        this.setId();
+        this.route.navigate(['post/detail']);
+    }
+    setId() {
+        this.service.setIdToGetOne(this.id);
     }
 }

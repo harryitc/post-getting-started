@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../post.service';
 import { POST } from 'src/app/interface';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'post-update',
@@ -16,6 +17,7 @@ export class UpdateComponent implements OnInit {
 
     constructor(
         private service: PostService,
+        private router: Router,
     ) { }
 
 
@@ -34,6 +36,10 @@ export class UpdateComponent implements OnInit {
         this.service.updatePost(this.post).catch(err => {
             this.service.notifyError();
         })
+    }
+
+    back() {
+        this.router.navigate(['post']);
     }
 
     init() {

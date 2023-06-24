@@ -11,6 +11,7 @@ import { DetailComponent } from './shared/action/detail/detail.component';
 import { UpdateComponent } from './shared/action/update/update.component';
 import { CreateComponent } from './create/create.component';
 import { ListComponent } from './list/list.component';
+import { RefreshComponent } from './refresh/refresh.component';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { ListComponent } from './list/list.component';
         UpdateComponent,
         CreateComponent,
         ListComponent,
+        RefreshComponent,
     ],
     providers: [
         PostService,
@@ -39,6 +41,7 @@ import { ListComponent } from './list/list.component';
         UpdateComponent,
         CreateComponent,
         ListComponent,
+        RefreshComponent,
     ]
 })
 

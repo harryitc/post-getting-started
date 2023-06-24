@@ -1,4 +1,7 @@
-# 5/3/2023
+# Hướng dẫn cách chạy
+
+1. npm install or yarn install
+2. npm run start
 
 # ECommerceAngular
 
